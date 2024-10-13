@@ -1,4 +1,4 @@
-#!/Users/gracewang/code/506/assignment4_starter_code/venv/bin/python3.12
+#!/Users/gracewang/code/506/a4-506/venv/bin/python3.12
 # -*- coding: utf-8 -*-
 import re
 import sys
