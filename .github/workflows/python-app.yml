@@ -15,7 +15,7 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
-    # Step 2: Set up Python
+    # Step 2: Set up Python 3.12
     - name: Set up Python 3.12
       uses: actions/setup-python@v4
       with:
@@ -24,19 +24,16 @@ jobs:
     # Step 3: Verify Python installation
     - name: Check Python version and path
       run: |
-        python3 --version  # Verify Python version is correct
-        which python3  # Verify Python path
+        python --version  # Verify Python version is correct
+        which python  # Verify Python path
 
-    # Step 4: Create and activate a virtual environment
-    - name: Install dependencies in a virtual environment
+    # Step 4: Install dependencies globally
+    - name: Install dependencies
       run: |
-        python3 -m venv venv  # Create the virtual environment using Python 3
-        source venv/bin/activate  # Activate the virtual environment
-        python -m ensurepip --upgrade  # Ensure pip is available in venv
         pip install --upgrade pip  # Upgrade pip to the latest version
-        pip install -r requirements.txt  # Install dependencies
+        pip install -r requirements.txt  # Install dependencies globally
 
     # Step 5: Run tests (or any other required commands)
     - name: Run tests
       run: |
-        source venv/bin/activate && pytest  # Replace 'pytest' with your test or build command
+        pytest  # Replace 'pytest' with your test or build command
