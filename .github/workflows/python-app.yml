@@ -1,14 +1,13 @@
 name: Python Application
 
-# Controls when the action will run
 on:
   push:
-    branches: [main]  # Trigger when code is pushed to the main branch
+    branches: [ main ]  # Triggers the workflow on pushes to the main branch
   pull_request:
-    branches: [main]  # Trigger when a pull request is made to the main branch
+    branches: [ main ]  # Triggers the workflow on pull requests to the main branch
 
 jobs:
-  install-and-test:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -17,22 +16,18 @@ jobs:
       uses: actions/checkout@v3
 
     # Step 2: Set up Python
-    - name: Set up Python
+    - name: Set up Python 3.12  # You can specify the required version here
       uses: actions/setup-python@v4
       with:
-        python-version: '3.12'  # Specify the Python version you're using
+        python-version: '3.12'
 
-    # Step 3: Install dependencies
+    # Step 3: Install dependencies in a virtual environment
     - name: Install dependencies
       run: |
         python -m venv venv  # Create virtual environment
-        source venv/bin/activate  # Activate virtual environment
-        pip install -r requirements.txt  # Install dependencies
+        source venv/bin/activate && pip install -r requirements.txt  # Activate virtual environment and install dependencies
 
-    # Step 4: Run any tests or necessary commands
-    - name: Run tests (or other commands)
+    # Step 4: Run tests or other commands in the same virtual environment
+    - name: Run tests (or any required command)
       run: |
-        source venv/bin/activate
-        # Replace with your actual test or build commands
-        # Example: pytest or any script you'd like to run
-        pytest  # or 'make test', or any command you need to verify
+        source venv/bin/activate && pytest  # Replace 'pytest' with your actual test or build commands
