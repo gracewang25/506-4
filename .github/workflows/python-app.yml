@@ -1,26 +1,38 @@
-name: Python App Workflow
+name: Python Application
 
+# Controls when the action will run
 on:
   push:
-    branches:
-      - main
+    branches: [main]  # Trigger when code is pushed to the main branch
+  pull_request:
+    branches: [main]  # Trigger when a pull request is made to the main branch
 
 jobs:
-  build:
+  install-and-test:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Set up Python
-      uses: actions/setup-python@v2
-      with:
-        python-version: '3.x'
+    # Step 1: Checkout the code from the repository
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
+    # Step 2: Set up Python
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.12'  # Specify the Python version you're using
+
+    # Step 3: Install dependencies
     - name: Install dependencies
       run: |
-        make install
+        python -m venv venv  # Create virtual environment
+        source venv/bin/activate  # Activate virtual environment
+        pip install -r requirements.txt  # Install dependencies
 
-    - name: Run application
+    # Step 4: Run any tests or necessary commands
+    - name: Run tests (or other commands)
       run: |
-        make run &
-        sleep 10
+        source venv/bin/activate
+        # Replace with your actual test or build commands
+        # Example: pytest or any script you'd like to run
+        pytest  # or 'make test', or any command you need to verify
